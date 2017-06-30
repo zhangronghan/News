@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.administrator.news.R;
 import com.example.administrator.news.base.BaseActivity;
+import com.example.administrator.news.cn.sharesdk.onekeyshare.OnekeyShare;
 import com.example.administrator.news.entity.MyData;
 import com.example.administrator.news.entity.NewsComment;
 
@@ -27,6 +28,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class mainWebActivity extends BaseActivity {
     private WebView mWebView;
     private String Url;
+    private String title;
     private Toolbar mToolbar;
     private EditText edtComment;
     private ImageView mIvShare;
@@ -41,6 +43,7 @@ public class mainWebActivity extends BaseActivity {
     @Override
     public void initData() {
         Url=getIntent().getStringExtra(MyData.WEB_URL);
+        title=getIntent().getStringExtra(MyData.NEWS_TITLE);
         mWebView.loadUrl(Url);
         initToolBar();
 
@@ -134,6 +137,16 @@ public class mainWebActivity extends BaseActivity {
                     mIvShare.setVisibility(View.VISIBLE);
                     mTvSend.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        mIvShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnekeyShare oks=new OnekeyShare();
+                oks.setTitle(title);
+                oks.setTitleUrl(Url);
+                oks.show(mainWebActivity.this);
             }
         });
 
