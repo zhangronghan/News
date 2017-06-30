@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_new"
+        icon="@drawable/home_tab_01_normal"
+        title="新闻"/>
+
+    <tab
+        id="@+id/tab_film"
+        icon="@drawable/home_tab_03_normal"
+        title="视听"/>
+
+    <tab
+        id="@+id/tab_read"
+        icon="@drawable/home_tab_02_normal"
+        title="阅读"/>
+
+    <tab
+        id="@+id/tab_rearch"
+        icon="@drawable/home_tab_04_normal"
+        title="发现"/>
+
+    <tab
+        id="@+id/tab_setting"
+        icon="@drawable/home_tab_05_normal"
+        title="设置"/>
+
+
+
+</tabs>

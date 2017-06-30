@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/popup1"
+          android:title="弹出1"
+          android:icon="@drawable/biz_video_play"/>
+
+    <item android:id="@+id/popup2"
+          android:title="弹出2"
+          android:icon="@drawable/biz_video_play"/>
+
+</menu>
