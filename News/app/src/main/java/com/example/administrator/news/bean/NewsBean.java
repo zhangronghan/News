@@ -19,7 +19,7 @@ public class NewsBean implements Serializable{
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable{
         /**
          * postid : PHOT25260000100A
          * hasCover : false

@@ -33,7 +33,7 @@ import java.util.List;
  * Created by Administrator on 2017/6/27.
  */
 
-public class cItemFragment extends BaseFragment {
+public class cItemFragment extends BaseFragment{
     private String channelId;
     private ListView mListView;
     private MyListViewAdapter mAdapter;
@@ -68,8 +68,11 @@ public class cItemFragment extends BaseFragment {
                 }
                 NewsBean.ResultBean news = newsData.getResult().get(index);
                 Intent intent = new Intent(getContext(), mainWebActivity.class);
-                intent.putExtra(MyData.WEB_URL, news.getUrl());
-                intent.putExtra(MyData.NEWS_TITLE, news.getTitle());
+/*                Bundle bundle=new Bundle();
+                bundle.putSerializable(MyData.NEWS_STATE, news);
+                intent.putExtras(bundle);*/
+                intent.putExtra(MyData.NEWS_TITLE,news.getTitle());
+                intent.putExtra(MyData.WEB_URL,news.getUrl());
                 startActivity(intent);
             }
         });

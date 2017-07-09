@@ -17,8 +17,14 @@ import com.example.administrator.news.R;
 import com.example.administrator.news.base.BaseActivity;
 import com.example.administrator.news.cn.sharesdk.onekeyshare.OnekeyShare;
 import com.example.administrator.news.entity.MyData;
-import com.example.administrator.news.entity.NewsComment;
+import com.example.administrator.news.entity.NewsInfo;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
@@ -34,6 +40,8 @@ public class mainWebActivity extends BaseActivity {
     private ImageView mIvShare;
     private TextView mTvSend;
     private ProgressBar mProgressBar;
+    //检查收藏夹是否重复收藏新闻
+    private Boolean isCheckDuplicate=false;
 
     @Override
     public int getLayoutRes() {
@@ -42,19 +50,12 @@ public class mainWebActivity extends BaseActivity {
 
     @Override
     public void initData() {
+//        NewsBean.ResultBean newsBean= (NewsBean.ResultBean) getIntent().getSerializableExtra(MyData.NEWS_STATE);
+
         Url=getIntent().getStringExtra(MyData.WEB_URL);
         title=getIntent().getStringExtra(MyData.NEWS_TITLE);
         mWebView.loadUrl(Url);
         initToolBar();
-
-        initSaveComment();
-
-    }
-
-    private void initSaveComment() {
-        NewsComment comment=new NewsComment();
-        comment.setMyComment(edtComment.getText().toString());
-//        comment.setNewsTitle();
 
     }
 
@@ -62,7 +63,7 @@ public class mainWebActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
 
         mToolbar.setTitle("ToolBar");
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setNavigationIcon(R.drawable.web_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,17 +80,13 @@ public class mainWebActivity extends BaseActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.item_collect) {
-            showToast("收藏");
-            return true;
-        }
         switch (item.getItemId()){
             case R.id.item_collect:
-                showToast("收藏");
+                checkCollected();
             break;
 
             case R.id.item_share:
-                showToast("分享");
+                ShareUrl();
             break;
 
             case R.id.item_dark:
@@ -97,13 +94,52 @@ public class mainWebActivity extends BaseActivity {
             break;
 
         }
-
         return super.onOptionsItemSelected(item);
     }
+
     //================Toolbar右上角弹出菜单(end)=========================
 
+    /**收藏前检查新闻是否重复
+     * 重复return true
+     * 不重复 return false
+     * */
+    private void checkCollected() {
+        BmobQuery<NewsInfo> bmobQuery=new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("newsTitle",title);
+
+        bmobQuery.findObjects(new FindListener<NewsInfo>() {
+            @Override
+            public void done(List<NewsInfo> list, BmobException e) {
+                if(e==null){
+                    showToast("已收藏");
+                } else {
+                    collectWebUrl();
+                }
+            }
+        });
+    }
+
+    /**点击收藏*/
+    private void collectWebUrl() {
+        NewsInfo info=new NewsInfo();
+        info.setNewsUrl(Url);
+        info.setNewsTitle(title);
+        info.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    showToast("收藏成功");
+                } else {
+                    System.out.println("收藏失败");
+                }
+            }
+        });
+
+    }
+
+
     @Override
-    public void initLIstener() {
+    public void initListener() {
 
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
@@ -143,13 +179,18 @@ public class mainWebActivity extends BaseActivity {
         mIvShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnekeyShare oks=new OnekeyShare();
-                oks.setTitle(title);
-                oks.setTitleUrl(Url);
-                oks.show(mainWebActivity.this);
+                ShareUrl();
             }
         });
 
+    }
+
+    /**一键分享*/
+    private void ShareUrl() {
+        OnekeyShare oks=new OnekeyShare();
+        oks.setTitle(title);
+        oks.setTitleUrl(Url);
+        oks.show(mainWebActivity.this);
     }
 
     @Override

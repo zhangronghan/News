@@ -55,7 +55,7 @@ public class GuideActivity extends BaseActivity {
     }
 
     @Override
-    public void initLIstener() {
+    public void initListener() {
         mBtnTouch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

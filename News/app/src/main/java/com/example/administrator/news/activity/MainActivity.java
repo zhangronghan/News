@@ -1,6 +1,7 @@
 package com.example.administrator.news.activity;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -59,7 +60,7 @@ public class MainActivity extends BaseActivity {
 
 
     @Override
-    public void initLIstener() {
+    public void initListener() {
         /**点击radioButton改变viewpager*/
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -182,7 +183,8 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.item_1:
-                        showToast("1");
+                        Intent intent=new Intent(MainActivity.this,MyCollectActivity.class);
+                        startActivity(intent);
                         mDrawerLayout.closeDrawers();
                         break;
 

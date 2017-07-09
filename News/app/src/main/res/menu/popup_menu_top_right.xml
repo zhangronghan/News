@@ -3,10 +3,10 @@
 
     <item android:id="@+id/popup1"
           android:title="弹出1"
-          android:icon="@drawable/biz_video_play"/>
+          android:icon="@mipmap/ic_launcher"/>
 
     <item android:id="@+id/popup2"
           android:title="弹出2"
-          android:icon="@drawable/biz_video_play"/>
+          android:icon="@mipmap/ic_launcher"/>
 
 </menu>

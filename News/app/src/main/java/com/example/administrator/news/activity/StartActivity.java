@@ -44,7 +44,7 @@ public class StartActivity extends BaseActivity {
     }
 
     @Override
-    public void initLIstener() {
+    public void initListener() {
 
     }
 

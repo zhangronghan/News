@@ -17,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutRes());
 
         initViews();
-        initLIstener();
+        initListener();
         initData();
 
     }
@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initData();
 
     /**设置控件的监听器 */
-    public abstract void initLIstener();
+    public abstract void initListener();
 
     /**  查找布局中的子控件 */
     public abstract void initViews();
